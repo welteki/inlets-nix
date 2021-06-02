@@ -22,8 +22,8 @@
         defaultPackage = pkgs.buildGoModule
           rec {
             pname = "inlets";
-            version = "3.0.1";
-            commit = "dbccc1ee8edfa0a06e4f7b258bbee4a959bc18af";
+            version = "3.0.2";
+            commit = "7b18a394b74390133e511957d954b1ba3b7d01a2";
 
             src = "${inlets-src}";
 
