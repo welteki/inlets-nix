@@ -14,11 +14,16 @@
     };
   };
 
-  outputs = { self, nixpkgs, flake-utils, flake-compat, inlets-src }:
+  outputs = inputs@{ self, nixpkgs, nix, ... }:
+    let
+      pkgs = import nixpkgs {
+        system = "x86_64-linux";
+        overlays = [ self.overlay nix.overlay ];
+      };
+    in
     {
-      system = "x86_64-linux";
-      defaultPackage = nixpkgs.buildGoModule
-        rec {
+      overlay = final: prev: {
+        inlets = with final; buildGoModule rec {
           pname = "inlets";
           version = "3.0.2";
           commit = "7b18a394b74390133e511957d954b1ba3b7d01a2";
@@ -40,5 +45,9 @@
             "-a"
           ];
         };
+      };
+
+      package.x86_64-linux.inlets = pkgs.inlets;
+      defaultPackage.x86_64-linux = pkgs.inlets;
     };
 }
