@@ -28,7 +28,7 @@
           version = "3.0.2";
           commit = "7b18a394b74390133e511957d954b1ba3b7d01a2";
 
-          src = "${inlets-src}";
+          src = "${inputs.inlets-src}";
 
           vendorSha256 = null;
 
@@ -49,5 +49,10 @@
 
       package.x86_64-linux.inlets = pkgs.inlets;
       defaultPackage.x86_64-linux = pkgs.inlets;
+
+      nixosModules.inlets = {
+        imports = [ ./inlets-module.nix ];
+        nixpkgs.overlays = [ self.overlay nix.overlay ];
+      };
     };
 }
