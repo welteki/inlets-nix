@@ -2,8 +2,7 @@
   description = "Cloud Native Tunnel";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs";
-    flake-utils.url = "github:numtide/flake-utils";
+    nixpkgs.follows = "nix/nixpkgs";
     flake-compat = {
       url = "github:edolstra/flake-compat";
       flake = false;
