@@ -1,6 +1,6 @@
 {
     "nixEnvSelector.nixFile": "${workspaceRoot}/shell.nix",
-    "editor.defaultFormatter": "B4dM4n.nixpkgs-fmt",
+    "editor.defaultFormatter": "jnoortheen.nix-ide",
     "editor.formatOnSave": true,
     "editor.formatOnType": true
 }
