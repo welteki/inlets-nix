@@ -15,10 +15,17 @@
 
   outputs = inputs@{ self, nixpkgs, nix, ... }:
     let
-      pkgs = import nixpkgs {
-        system = "x86_64-linux";
-        overlays = [ self.overlay nix.overlay ];
-      };
+      supportedSystems = [
+        "x86_64-linux"
+        "i686-linux"
+        "x86_64-darwin"
+        "aarch64-linux"
+        "armv6l-linux"
+        "armv7l-linux"
+        "aarch64-darwin"
+      ];
+
+      forAllSystems = f: nixpkgs.lib.genAttrs supportedSystems (system: f system);
     in
     {
       overlay = final: prev: {
@@ -46,8 +53,10 @@
         };
       };
 
-      package.x86_64-linux.inlets = pkgs.inlets;
-      defaultPackage.x86_64-linux = pkgs.inlets;
+      defaultPackage = forAllSystems (system: (import nixpkgs {
+        inherit system;
+        overlays = [ self.overlay nix.overlay ];
+      }).inlets);
 
       nixosModules.inlets = {
         imports = [ ./inlets-module.nix ];
