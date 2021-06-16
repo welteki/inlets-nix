@@ -1,3 +1,8 @@
+> 🛠 **Status: Experimental**
+>
+> This project is currently in development.
+
+
 [inlets](https://github.com/inlets/inlets) packaged up in Nix.
 
 **Install:**
