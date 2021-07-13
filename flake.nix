@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.follows = "nix/nixpkgs";
+    utils.url = "github:numtide/flake-utils";
     flake-compat = {
       url = "github:edolstra/flake-compat";
       flake = false;
@@ -13,7 +14,7 @@
     };
   };
 
-  outputs = inputs@{ self, nixpkgs, nix, ... }:
+  outputs = inputs@{ self, nixpkgs, nix, utils, ... }:
     let
       supportedSystems = [
         "x86_64-linux"
@@ -28,39 +29,82 @@
       forAllSystems = f: nixpkgs.lib.genAttrs supportedSystems (system: f system);
     in
     {
-      overlay = final: prev: {
-        inlets = with final; buildGoModule rec {
-          pname = "inlets";
-          version = "4.0.1";
-          commit = "883e3c42be9c1f53d63c8cb47407644387966f33";
+      overlay = final: prev:
+        let
+          inherit (final) fetchurl buildGoModule stdenv system;
 
-          src = "${inputs.inlets-src}";
+          inlets-pro = rec {
+            version = "0.8.5";
+            src = {
+              inherit version;
 
-          vendorSha256 = "0jqkfjpvfwhx9dn58liawsyyn01bydp970fifc79vx126g0fczm9";
+              x86_64-linux = fetchurl {
+                url = "https://github.com/inlets/inlets-pro/releases/download/${version}/inlets-pro";
+                sha256 = "";
+              };
 
-          subPackages = [ "." ];
+              x86_64-darwin = fetchurl {
+                url = "https://github.com/inlets/inlets-pro/releases/download/${version}/inlets-pro-darwin";
+                sha256 = "1bypr13y73sfi50gm71lmbfkvzwg17pbi1dkgzpa2h8z8f6d2qd2";
+              };
+            };
+          };
+        in
+        {
+          inlets = buildGoModule rec {
+            pname = "inlets";
+            version = "4.0.1";
+            commit = "883e3c42be9c1f53d63c8cb47407644387966f33";
 
-          CGO_ENABLED = 0;
-          buildFlagsArray = [
-            ''
-              -ldflags=
-              -s -w 
-              -X main.GitCommit=${commit}
-              -X main.Version=${version}
-            ''
-            "-a"
-          ];
+            src = "${inputs.inlets-src}";
+
+            vendorSha256 = "0jqkfjpvfwhx9dn58liawsyyn01bydp970fifc79vx126g0fczm9";
+
+            subPackages = [ "." ];
+
+            CGO_ENABLED = 0;
+            buildFlagsArray = [
+              ''
+                -ldflags=
+                -s -w 
+                -X main.GitCommit=${commit}
+                -X main.Version=${version}
+              ''
+              "-a"
+            ];
+          };
+
+          inlets-pro = stdenv.mkDerivation rec {
+            pname = "inlets-pro";
+            version = "${inlets-pro.version}";
+
+            src = inlets-pro.src.${system};
+
+            dontUnpack = true;
+
+            installPhase = ''
+              install -m755 -D ${src} $out/bin/inlets-pro
+            '';
+          };
         };
-      };
-
-      defaultPackage = forAllSystems (system: (import nixpkgs {
-        inherit system;
-        overlays = [ self.overlay nix.overlay ];
-      }).inlets);
 
       nixosModules.inlets = {
         imports = [ ./inlets-module.nix ];
         nixpkgs.overlays = [ self.overlay nix.overlay ];
       };
-    };
+
+    } // utils.lib.eachSystem supportedSystems (system:
+      let
+        pkgs = import nixpkgs {
+          inherit system;
+          overlays = [ self.overlay nix.overlay ];
+        };
+      in
+      rec {
+        packages = utils.lib.flattenTree {
+          inlets = pkgs.inlets;
+          inlets-pro = pkgs.inlets-pro;
+        };
+        defaultPackage = packages.inlets-pro;
+      });
 }
