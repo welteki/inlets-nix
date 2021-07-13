@@ -8,7 +8,7 @@
       flake = false;
     };
     inlets-src = {
-      url = "https://github.com/inlets/inlets/archive/refs/tags/3.0.2.tar.gz";
+      url = "https://github.com/inlets/inlets-archived/archive/refs/tags/4.0.1.tar.gz";
       flake = false;
     };
   };
@@ -31,12 +31,12 @@
       overlay = final: prev: {
         inlets = with final; buildGoModule rec {
           pname = "inlets";
-          version = "3.0.2";
-          commit = "7b18a394b74390133e511957d954b1ba3b7d01a2";
+          version = "4.0.1";
+          commit = "883e3c42be9c1f53d63c8cb47407644387966f33";
 
           src = "${inputs.inlets-src}";
 
-          vendorSha256 = null;
+          vendorSha256 = "0jqkfjpvfwhx9dn58liawsyyn01bydp970fifc79vx126g0fczm9";
 
           subPackages = [ "." ];
 

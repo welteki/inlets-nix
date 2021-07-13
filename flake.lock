@@ -19,13 +19,13 @@
     "inlets-src": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-WZhwswcbp3MC52gIOF4pWaE1FeZL4UxWz++ZDDaC4aE=",
+        "narHash": "sha256-UQz8A8qMLv+WyxQoO/N4vkZ/T1K3FFjS34pn9lE4d+0=",
         "type": "tarball",
-        "url": "https://github.com/inlets/inlets/archive/refs/tags/3.0.2.tar.gz"
+        "url": "https://github.com/inlets/inlets-archived/archive/refs/tags/4.0.1.tar.gz"
       },
       "original": {
         "type": "tarball",
-        "url": "https://github.com/inlets/inlets/archive/refs/tags/3.0.2.tar.gz"
+        "url": "https://github.com/inlets/inlets-archived/archive/refs/tags/4.0.1.tar.gz"
       }
     },
     "lowdown-src": {
