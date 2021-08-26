@@ -16,18 +16,6 @@
         "type": "github"
       }
     },
-    "inlets-src": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-UQz8A8qMLv+WyxQoO/N4vkZ/T1K3FFjS34pn9lE4d+0=",
-        "type": "tarball",
-        "url": "https://github.com/inlets/inlets-archived/archive/refs/tags/4.0.1.tar.gz"
-      },
-      "original": {
-        "type": "tarball",
-        "url": "https://github.com/inlets/inlets-archived/archive/refs/tags/4.0.1.tar.gz"
-      }
-    },
     "lowdown-src": {
       "flake": false,
       "locked": {
@@ -51,11 +39,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1622809115,
-        "narHash": "sha256-0lfX3ihV+5VsOs40eSzNMUSNlmH6MRqkb+VDWaJNEzw=",
+        "lastModified": 1629716742,
+        "narHash": "sha256-H+ISQ6m7YJFNbS1RnW14WAuKNRReEqL6y95UIJPAxAM=",
         "owner": "NixOS",
         "repo": "nix",
-        "rev": "8e6ee1b9e924fbbbeb5594eb89e7a570f36ab6e1",
+        "rev": "af94b54db3a2be100731a215cb5e95f306471731",
         "type": "github"
       },
       "original": {
@@ -65,11 +53,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1622593737,
-        "narHash": "sha256-9loxFJg85AbzJrSkU4pE/divZ1+zOxDy2FSjlrufCB8=",
+        "lastModified": 1628689438,
+        "narHash": "sha256-YMINW6YmubHZVdliGsAJpnnMYXRrvppv59LgwtnyYhs=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "bb8a5e54845012ed1375ffd5f317d2fdf434b20e",
+        "rev": "f6551e1efa261568c82b76c3a582b2c2ceb1f53f",
         "type": "github"
       },
       "original": {
@@ -81,7 +69,6 @@
     "root": {
       "inputs": {
         "flake-compat": "flake-compat",
-        "inlets-src": "inlets-src",
         "nix": "nix",
         "nixpkgs": [
           "nix",

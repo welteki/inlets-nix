@@ -7,10 +7,6 @@
       url = "github:edolstra/flake-compat";
       flake = false;
     };
-    inlets-src = {
-      url = "https://github.com/inlets/inlets-archived/archive/refs/tags/4.0.1.tar.gz";
-      flake = false;
-    };
   };
 
   outputs = inputs@{ self, nixpkgs, nix, ... }:
@@ -23,30 +19,39 @@
       forAllSystems = f: nixpkgs.lib.genAttrs supportedSystems (system: f system);
     in
     {
-      overlay = final: prev: {
-        inlets = with final; buildGoModule rec {
-          pname = "inlets";
-          version = "4.0.1";
-          commit = "883e3c42be9c1f53d63c8cb47407644387966f33";
+      overlay = final: prev:
+        let
+          inherit (final) buildGoModule fetchFromGitHub;
+        in
+        {
+          inlets = buildGoModule rec {
+            pname = "inlets";
+            version = "4.0.1-archived";
+            commit = "ae9a0f82a8914c12b338f5c310e3fcf9750e0309";
 
-          src = "${inputs.inlets-src}";
+            src = fetchFromGitHub {
+              owner = "inlets";
+              repo = "inlets-archived";
+              rev = "${commit}";
+              sha256 = "1vbp718zcrwavz95h55pa97pyimyg3rkna0lrfbgyblcr81zq32i";
+            };
 
-          vendorSha256 = "0jqkfjpvfwhx9dn58liawsyyn01bydp970fifc79vx126g0fczm9";
+            vendorSha256 = "0jqkfjpvfwhx9dn58liawsyyn01bydp970fifc79vx126g0fczm9";
 
-          subPackages = [ "." ];
+            subPackages = [ "." ];
 
-          CGO_ENABLED = 0;
-          buildFlagsArray = [
-            ''
-              -ldflags=
-              -s -w 
-              -X main.GitCommit=${commit}
-              -X main.Version=${version}
-            ''
-            "-a"
-          ];
+            CGO_ENABLED = 0;
+            buildFlagsArray = [
+              ''
+                -ldflags=
+                -s -w 
+                -X main.GitCommit=${commit}
+                -X main.Version=${version}
+              ''
+              "-a"
+            ];
+          };
         };
-      };
 
       defaultPackage = forAllSystems (system: (import nixpkgs {
         inherit system;
