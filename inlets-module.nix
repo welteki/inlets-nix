@@ -110,7 +110,7 @@ in
         Type = "simple";
         Restart = "always";
         RestartSec = 1;
-        StartLimitInterval = 0;
+        StartLimitIntervalSec = 0;
         ExecStart = ''${cfg.package}/bin/inlets server \
           --port ${toString (if cfg.dataAddress.port != null then cfg.dataAddress.port else cfg.port)} \
           --data-addr ${cfg.dataAddress.addr} \
