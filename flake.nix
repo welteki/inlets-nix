@@ -2,14 +2,14 @@
   description = "Cloud Native Tunnel";
 
   inputs = {
-    nixpkgs.follows = "nix/nixpkgs";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-21.05";
     flake-compat = {
       url = "github:edolstra/flake-compat";
       flake = false;
     };
   };
 
-  outputs = inputs@{ self, nixpkgs, nix, ... }:
+  outputs = inputs@{ self, nixpkgs, ... }:
     let
       supportedSystems = [
         "x86_64-linux"
@@ -55,12 +55,12 @@
 
       defaultPackage = forAllSystems (system: (import nixpkgs {
         inherit system;
-        overlays = [ self.overlay nix.overlay ];
+        overlays = [ self.overlay ];
       }).inlets);
 
       nixosModules.inlets = {
         imports = [ ./inlets-module.nix ];
-        nixpkgs.overlays = [ self.overlay nix.overlay ];
+        nixpkgs.overlays = [ self.overlay ];
       };
     };
 }
