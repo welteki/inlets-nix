@@ -29,18 +29,18 @@
           inherit (final) fetchurl buildGoModule stdenv system;
 
           inlets-pro = rec {
-            version = "0.8.5";
+            version = "0.8.9";
             src = {
               inherit version;
 
               x86_64-linux = fetchurl {
                 url = "https://github.com/inlets/inlets-pro/releases/download/${version}/inlets-pro";
-                sha256 = "";
+                sha256 = "07521b2g7saavda1m2jkva631s80f14ik9h9dg755whjqyx343lj";
               };
 
               x86_64-darwin = fetchurl {
                 url = "https://github.com/inlets/inlets-pro/releases/download/${version}/inlets-pro-darwin";
-                sha256 = "1bypr13y73sfi50gm71lmbfkvzwg17pbi1dkgzpa2h8z8f6d2qd2";
+                sha256 = "1wawrmi74y43l6x6bmdsdyxav45r4miia3v070kis3jq20r8pc9m";
               };
             };
           };
