@@ -109,6 +109,7 @@ in
       serviceConfig = {
         Type = "simple";
         Restart = "always";
+        User = "inlets";
         RestartSec = 1;
         StartLimitIntervalSec = 0;
         ExecStart = ''${cfg.package}/bin/inlets server \
