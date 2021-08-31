@@ -48,20 +48,16 @@ in
           };
 
           port = mkOption {
-            type = types.nullOr types.int;
-            default = null;
+            type = types.int;
+            default = 8001;
             description = ''
               Port to listen to.
             '';
           };
         };
-        default = { addr = "0.0.0.0"; port = null; };
-        example = { addr = "0.0.0.0"; port = 8081; };
+        default = { addr = "0.0.0.0"; port = 8001; };
         description = ''
           Address and port tunnel clients should connect to.
-          If port is not specified will listen on port specified by
-          <literal>port</literal> option.
-          NOTE: this will override default listening on all local addresses and port 8000.
         '';
       };
 
@@ -77,7 +73,7 @@ in
 
           port = mkOption {
             type = types.nullOr types.int;
-            default = null;
+            default = 8000;
             description = ''
               Port to listen to.
             '';
@@ -116,7 +112,7 @@ in
           --port ${toString (if cfg.dataAddress.port != null then cfg.dataAddress.port else cfg.port)} \
           --data-addr ${cfg.dataAddress.addr} \
           --control-addr ${cfg.controlAddress.addr} \
-          --control-port ${toString (if cfg.controlAddress.port != null then cfg.controlAddress.port else cfg.port)} \
+          --control-port ${toString cfg.controlAddress.port} \
           ${if cfg.token != null then "--token-from ${toString cfg.token}" else ""}
         '';
       };
