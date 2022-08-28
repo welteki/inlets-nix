@@ -2,7 +2,6 @@
   description = "Cloud Native Tunnel";
 
   inputs = {
-    nixpkgs.follows = "nix/nixpkgs";
     utils.url = "github:numtide/flake-utils";
     flake-compat = {
       url = "github:edolstra/flake-compat";
@@ -15,28 +14,38 @@
       supportedSystems = [
         "x86_64-linux"
         "x86_64-darwin"
+        "aarch64-linux"
+        "aarch64-darwin"
       ];
-
-      forAllSystems = f: nixpkgs.lib.genAttrs supportedSystems (system: f system);
     in
     {
-      overlay = final: prev:
+      overlays.default = final: prev:
         let
           inherit (final) fetchurl buildGoModule stdenv system;
 
           inlets-pro = rec {
-            version = "0.8.9";
+            version = "0.9.6";
             src = {
               inherit version;
 
               x86_64-linux = fetchurl {
                 url = "https://github.com/inlets/inlets-pro/releases/download/${version}/inlets-pro";
-                sha256 = "07521b2g7saavda1m2jkva631s80f14ik9h9dg755whjqyx343lj";
+                sha256 = "sha256-r0wpGoJo8hVzsD5oveeNQpq/lZsjMPebTAwbbD4ewK4=";
               };
 
               x86_64-darwin = fetchurl {
                 url = "https://github.com/inlets/inlets-pro/releases/download/${version}/inlets-pro-darwin";
-                sha256 = "1wawrmi74y43l6x6bmdsdyxav45r4miia3v070kis3jq20r8pc9m";
+                sha256 = "sha256-eaMTh9/f9BiA2RKsW8G3+RU0VvYpI/ahh53766idsO0=";
+              };
+
+              aarch64-linux = fetchurl {
+                url = "https://github.com/inlets/inlets-pro/releases/download/${version}/inlets-pro-arm64";
+                sha256 = "sha256-zQVKKQNCsG2BozrT1XOsp9WMSU+cPo1rhaLXhXfUc30=";
+              };
+
+              aarch64-darwin = fetchurl {
+                url = "https://github.com/inlets/inlets-pro/releases/download/${version}/inlets-pro-darwin-arm64";
+                sha256 = "sha256-J6DE6MNqO9xcNRsWaKJ4hMdgXpWxt7u+9LggC1JIjjk=";
               };
             };
           };
@@ -60,13 +69,14 @@
       let
         pkgs = import nixpkgs {
           inherit system;
-          overlays = [ self.overlay nix.overlay ];
+          overlays = [ self.overlays.default ];
         };
       in
-      rec {
-        packages = utils.lib.flattenTree {
-          inlets-pro = pkgs.inlets-pro;
+      {
+        packages = rec {
+          inherit (pkgs) inlets-pro;
+
+          default = inlets-pro;
         };
-        defaultPackage = packages.inlets-pro;
       });
 }
