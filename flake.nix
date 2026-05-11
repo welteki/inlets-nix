@@ -20,28 +20,28 @@
           inherit (final) fetchurl buildGoModule stdenv system;
 
           inlets-pro = rec {
-            version = "0.9.39";
+            version = "0.11.8";
             src = {
               inherit version;
 
               x86_64-linux = fetchurl {
                 url = "https://github.com/inlets/inlets-pro/releases/download/${version}/inlets-pro";
-                sha256 = "sha256-usOdUd52Tgm5fJjmuP6ZqncGHUBS5jC+B1wgZkx4x1I=";
+                sha256 = "sha256-GgTzAgq/h6NIm2MAFb13yzPvE6yjQryY/8cSpNxaSZc=";
               };
 
               x86_64-darwin = fetchurl {
                 url = "https://github.com/inlets/inlets-pro/releases/download/${version}/inlets-pro-darwin";
-                sha256 = "sha256-Q1rVQ+FaeYmAY5Uu9FvLT0Qh3v0XIEUvVEWnps0n70k=";
+                sha256 = "sha256-toC4t8+1SBWD4eibpC/wESEoxHmYawL9DoVliR2F8V0=";
               };
 
               aarch64-linux = fetchurl {
                 url = "https://github.com/inlets/inlets-pro/releases/download/${version}/inlets-pro-arm64";
-                sha256 = "sha256-gPI18BtRuHJY0WO2aVd5amkjg2WYigi66y2ATn5NfEk=";
+                sha256 = "sha256-zPEB7ll9LBMyyZFY7TEDalvLm8PHCLnocGkOAiyc1UQ=";
               };
 
               aarch64-darwin = fetchurl {
                 url = "https://github.com/inlets/inlets-pro/releases/download/${version}/inlets-pro-darwin-arm64";
-                sha256 = "sha256-QKbBkIK4Y3O8M4IKsIkccBe2tqSXsmZ8C8pG5+upZmM=";
+                sha256 = "sha256-dbk6mZZ5HlHKeyPN7AhqMTtqSrp2oHZTXgnaTxP0zZs=";
               };
             };
           };
