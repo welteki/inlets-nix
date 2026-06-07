@@ -1,0 +1,19 @@
+{
+  "version": "0.11.11",
+  "x86_64-linux": {
+    "url": "https://github.com/inlets/inlets-pro/releases/download/0.11.11/inlets-pro",
+    "sha256": "sha256-7/Gwl0ZZPvMXCzkhSisGXYhqQ9q69vkrU59AC4yYjDI="
+  },
+  "x86_64-darwin": {
+    "url": "https://github.com/inlets/inlets-pro/releases/download/0.11.11/inlets-pro-darwin",
+    "sha256": "sha256-qTmsc1VljCT4Ju7sGLCOXKf8bovDQjd2cvGJGgc+iCo="
+  },
+  "aarch64-linux": {
+    "url": "https://github.com/inlets/inlets-pro/releases/download/0.11.11/inlets-pro-arm64",
+    "sha256": "sha256-beeXrfkzSZOtkf7EtE33Xqbor0JvcxZF8dUA2DeZciY="
+  },
+  "aarch64-darwin": {
+    "url": "https://github.com/inlets/inlets-pro/releases/download/0.11.11/inlets-pro-darwin-arm64",
+    "sha256": "sha256-2fR47qTALCDuyT8WQS/CcoX7x5FzYBoc/PeTIV+SPZc="
+  }
+}
