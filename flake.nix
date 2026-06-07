@@ -17,6 +17,7 @@
     {
       overlays.default = final: prev:
         let
+          inherit (final.lib) licenses;
           inherit (final) fetchurl buildGoModule stdenv system;
 
           inlets-pro = rec {
@@ -58,6 +59,12 @@
             installPhase = ''
               install -m755 -D ${src} $out/bin/inlets-pro
             '';
+
+            meta = {
+              description = "Cloud Native Tunnel for HTTP and TCP";
+              homepage = "https://inlets.dev";
+              license = licenses.unfree;
+            };
           };
         };
 
